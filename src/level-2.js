@@ -25,7 +25,7 @@
 
 (function()
 {
-	MyGame.Level_1 = function ()
+	MyGame.Level_2 = function ()
 	{
 		// call the super-class constructor
 		Nadion.Level.call( this );
@@ -34,7 +34,7 @@
 		this.tile_height = 16;
 
 		// tilemap
-		this.tilemap = 'assets/maps/level-3.json';
+		this.tilemap = 'assets/maps/level-1.json';
 
 		// tileset
 		this.tileset_url = 'assets/img/platformer_tiles.png';
@@ -115,9 +115,9 @@
 		// the percentage loaded will display along with the 'loading' png
 		//this.loading_text_style = { font: "My_Bitmap_Font", align: "center" };
 	};
-	MyGame.Level_1.prototype = Object.create( Nadion.Level );
-	Nadion.__extends( MyGame.Level_1, Nadion.Level );
-	MyGame.Level_1.prototype.constructor = MyGame.Level_1;
+	MyGame.Level_2.prototype = Object.create( Nadion.Level );
+	Nadion.__extends( MyGame.Level_2, Nadion.Level );
+	MyGame.Level_2.prototype.constructor = MyGame.Level_2;
 
 
 })();

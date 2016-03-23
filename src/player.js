@@ -207,15 +207,31 @@
 		var birdX = this.x - this.game.camera.x;
 		var birdY = this.y - this.game.camera.y;
 		var distance = Math.sqrt(Math.pow((mouseX-birdX), 2) + Math.pow((mouseY-birdY), 2));
-		var dashX = (mouseX - birdX)/(distance);
-		var dashY = (mouseY - birdY)/(distance);
+		var dX = (mouseX - birdX);
+		var dY = (mouseY - birdY);
+		var angle = -1 * Math.atan2(dY, dX)*180/3.14159265;
 		this.attack_timer = this.time.time;
 		this.animations.play( 'bite');
-		this.body.velocity.y = 700*dashY;
-		this.body.velocity.x = 250*dashX;
-		console.log('birdX = ' + birdX + ' birdY = ' + birdY);
-		console.log(mouseX + ' ' + mouseY);
-		console.log(' x = ' + dashX + ' y = ' + dashY);
+		/*this.body.velocity.y = 700*dashY;
+		this.body.velocity.x = 250*dashX;*/
+		console.log(angle);
+		if (angle <= 30) {
+			console.log('right');
+			this.body.velocity.y = 0;
+			this.body.velocity.x = 250;
+		} else if (angle > 30 && angle < 60) {
+			console.log('diagnol');
+			this.body.velocity.y = 800;
+			this.body.velocity.x = 300;
+		} else {
+			console.log('up');
+			this.body.velocity.y = 900;
+			this.body.velocity.x = 0;
+		}
+		console.log('velocities');
+		console.log(this.body.velocity.x);
+		console.log(this.body.velocity.y);
+
 
 		this.body.blocked.down = false;
 		this.body.touching.down = false;
@@ -312,7 +328,6 @@
 	};
 
 	MyGame.Player.prototype.jump = function() {
-		console.log("jump");
 		this.body.velocity.y -= this.jump_increment;
 		this.body.blocked.down = false;
 		this.body.touching.down = false;
@@ -330,7 +345,6 @@
 
 	MyGame.Player.prototype.updateObject = function() {
 		var game_state = this.game.state.states[this.game.state.current];
-		console.log('x position: ' + this.x);
 
 		// collide player with tilemap layers that are marked 'solid'
 		for( var i = 0; i < game_state.layers.length; i++ ) {

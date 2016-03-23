@@ -55,11 +55,54 @@
          "y":0
         },
         {
+         "draworder":"topdown",
          "height":32,
          "name":"objects",
          "objects":[
                 {
+                 "height":2,
+                 "id":1,
+                 "name":"cat-emitter",
+                 "properties":
+                    {
+                     "image":"bad-cat",
+                     "maxParticleSpeedX":"150",
+                     "maxParticleSpeedY":"1000",
+                     "maxRotation":"180",
+                     "minParticleSpeedX":"150",
+                     "minParticleSpeedY":"750",
+                     "minRotation":"-180",
+                     "period":"2000",
+                     "quantity":"512"
+                    },
+                 "rotation":0,
+                 "type":"Emitter",
+                 "visible":true,
+                 "width":288,
+                 "x":320,
+                 "y":0
+                },
+                {
+                 "height":32,
+                 "id":2,
+                 "name":"raining-cats-trigger",
+                 "properties":
+                    {
+                     "entity":"chick",
+                     "on_enter":"go",
+                     "on_exit":"stop",
+                     "target":"cat-emitter"
+                    },
+                 "rotation":0,
+                 "type":"Area",
+                 "visible":true,
+                 "width":32,
+                 "x":448,
+                 "y":80
+                },
+                {
                  "height":16,
+                 "id":3,
                  "name":"make-flower-bloom-trigger",
                  "properties":
                     {
@@ -69,9 +112,28 @@
                      "sound_effect":"phaser",
                      "trigger_on_touch":"true"
                     },
+                 "rotation":0,
                  "type":"SetTileTrigger",
+                 "visible":true,
                  "width":16,
                  "x":752,
+                 "y":224
+                },
+                {
+                 "height":16,
+                 "id":6,
+                 "name":"next-level",
+                 "properties":
+                    {
+                     "entity":"chick",
+                     "level":"2",
+                     "trigger_on_touch":"true"
+                    },
+                 "rotation":0,
+                 "type":"NextLevelTrigger",
+                 "visible":true,
+                 "width":16,
+                 "x":960,
                  "y":224
                 }],
          "opacity":1,
@@ -82,29 +144,36 @@
          "y":0
         },
         {
+         "draworder":"topdown",
          "height":32,
          "name":"sprites",
          "objects":[
                 {
                  "height":16,
+                 "id":4,
                  "name":"chick",
                  "properties":
                     {
 
                     },
+                 "rotation":0,
                  "type":"Player",
+                 "visible":true,
                  "width":16,
                  "x":0,
                  "y":200
                 },
                 {
                  "height":16,
+                 "id":5,
                  "name":"bad-cat",
                  "properties":
                     {
                      "jump-velocity":"500"
                     },
+                 "rotation":0,
                  "type":"Enemy",
+                 "visible":true,
                  "width":16,
                  "x":296,
                  "y":224
@@ -143,15 +212,18 @@
          "x":0,
          "y":0
         }],
+ "nextobjectid":8,
  "orientation":"orthogonal",
  "properties":
     {
      "height":"256",
      "width":"1024"
     },
+ "renderorder":"right-down",
  "tileheight":16,
  "tilesets":[
         {
+         "columns":19,
          "firstgid":1,
          "image":"..\/img\/platformer_tiles.png",
          "imageheight":96,
@@ -163,6 +235,7 @@
 
             },
          "spacing":0,
+         "tilecount":114,
          "tileheight":16,
          "tileproperties":
             {
