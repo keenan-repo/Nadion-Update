@@ -101,9 +101,10 @@
 	];
 
 
+
+
 	MyGame.Player = function ( game, name, x, y, width, height, props ) {
 		Nadion.BaseSprite.call( this, game, 'chick', name, x, y, width, height, props );
-		//game.physics.enable(this, Phaser.Physics.ARCADE);
 		// fields
 		var game_state = this.game.state.states[this.game.state.current];
 		this.facing = Phaser.RIGHT;
@@ -122,6 +123,8 @@
 		// (if you don't set this on some sprite the game won't be able
 		// start)
 		this.is_player_sprite = true;
+		this.nextFire = 0;
+		this.fireRate = 100;
 
 		// Phaser.Sprite settings
 		this.body.collideWorldBounds = true;
@@ -134,17 +137,21 @@
 		this.animations.add( 'right', [0, 1, 2], 3, true );
 		this.animations.add( 'bite', [3, 2, 3, 2], 0.1, true);
 
+
 		game.add.existing( this );
 	};
 
 	MyGame.Player.prototype = Object.create( Nadion.BaseSprite );
 	Nadion.__extends( MyGame.Player, Nadion.BaseSprite );
 	MyGame.Player.prototype.constructor = MyGame.Player;
-
+	var	bullets;
+	var bullet;
+	//bullets = MyGame.Player.game.add.group();
 
 
 	// prototype (methods)
 	MyGame.Player.prototype.reset = function() {
+		console.log('reseting');
 		this.x = this.initial_x;
 		this.y = this.initial_y;
 		this.body.velocity.x = 0;
@@ -202,55 +209,48 @@
 
 //this should be called dash or something
 	MyGame.Player.prototype.bite = function()	{
-		var mouseX = this.game.input.activePointer.x;
+		/*var mouseX = this.game.input.activePointer.x;
 		var mouseY = this.game.input.activePointer.y;
 		var birdX = this.x - this.game.camera.x;
 		var birdY = this.y - this.game.camera.y;
 		var distance = Math.sqrt(Math.pow((mouseX-birdX), 2) + Math.pow((mouseY-birdY), 2));
 		var dX = (mouseX - birdX);
 		var dY = (mouseY - birdY);
-		var angle = -1 * Math.atan2(dY, dX)*180/3.14159265;
-		this.attack_timer = this.time.time;
-		this.animations.play( 'bite');
-		/*this.body.velocity.y = 700*dashY;
-		this.body.velocity.x = 250*dashX;*/
-		console.log(angle);
-		if (angle <= 30) {
-			console.log('right');
-			this.body.velocity.y = 0;
-			this.body.velocity.x = 250;
-		} else if (angle > 30 && angle < 60) {
-			console.log('diagnol');
-			this.body.velocity.y = 800;
-			this.body.velocity.x = 300;
-		} else {
-			console.log('up');
-			this.body.velocity.y = 900;
-			this.body.velocity.x = 0;
+		var angle = -1 * Math.atan2(dY, dX)*180/3.14159265;*/
+		var fireRate = 1000;
+		var nextFire = 0;
+		bullets = this.game.add.group();
+		bullets.enableBody = true;
+		bullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+		bullets.createMultiple(50, 'bullet');
+	///	bullets.setAll('checkWorldBounds', true);
+	//	bullets.setAll('outOfBoundsKill', true);
+
+		if (this.time.now > nextFire && bullets.countDead() > 0){
+			nextFire = this.time.now + fireRate;
+
+			bullet = bullets.getFirstDead();
+
+			bullet.reset(this.x - 8, this.y - 8);
+
+			this.game.physics.arcade.moveToPointer(bullet, 300);
+			console.log(bullet);
 		}
-		console.log('velocities');
-		console.log(this.body.velocity.x);
-		console.log(this.body.velocity.y);
-
-
-		this.body.blocked.down = false;
-		this.body.touching.down = false;
-		/*if( this.facing == Phaser.LEFT){
-			this.body.velocity.x = -300;
-		} else{
-			this.body.velocity.x = 300;
-		}*/
-
-			//this.jump();
 	};
 
 	MyGame.Player.prototype.attack = function()	{
 	};
 
-	MyGame.Player.prototype.spriteCollisionCallback = function( p, s ) {
+	MyGame.Player.prototype.spriteCollisionCallback = function(p , s ) {
 		// we were hit by an enemy!
 		if( s instanceof MyGame.Enemy )
 			this.hit();
+	};
+
+	MyGame.Player.prototype.bulletCollisionCallback = function(p, s) {
+		if(s instanceof MyGame.Enemy)
+			bullet.kill();
 	};
 
 	MyGame.Player.prototype.canJump = function() {
@@ -343,9 +343,10 @@
 	};
 
 
+
 	MyGame.Player.prototype.updateObject = function() {
 		var game_state = this.game.state.states[this.game.state.current];
-
+		console.log(bullets);
 		// collide player with tilemap layers that are marked 'solid'
 		for( var i = 0; i < game_state.layers.length; i++ ) {
 			var lyr = game_state.layers[i];
@@ -356,6 +357,16 @@
 		// collide with sprites that are 'solid'
 		for( i = 0; i < game_state.groups.length; i++ ) {
 			this.game.physics.arcade.collide( this, game_state.groups[i], this.spriteCollisionCallback, null, this );
+		}
+
+		for( var i = 0; i < game_state.layers.length; i++ ) {
+			var lyr = game_state.layers[i];
+			if( lyr.solid )
+				this.game.physics.arcade.collide( bullets, lyr );
+		}
+
+		for( var i = 0; i < game_state.groups.length; i++ ) {
+			this.game.physics.arcade.overlap( bullets, game_state.groups[i], this.bulletCollisionCallback, null, this);
 		}
 
 		// handle input
@@ -417,6 +428,7 @@
 			//	this.fsm.consumeEvent( 'fall' );
 			if (this.game.input.activePointer.isDown && this.canJump()) {
 				this.fsm.consumeEvent('attack');
+				console.log("i'm a bird chirp");
 			}
 			else if( left )
 				this.goLeft();
@@ -451,93 +463,4 @@
 			break;
 		}
 	};
-
-
-
-/*  var Bullet = function (game, key) {
-
-		Phaser.sprite.call(this, game, 0, 0, key);
-
-		this.texture.baseTexture.scaleMode = PIXI.scaleModes.NEAREST;
-
-		this.anchor.set(0.5);
-		this.checkWorldBounds = true;
-		this.outOfBoundsKill = true;
-		this.exists = fase;
-
-		this.tracking = false;
-		this.scaleSpeed = 0;
-  };
-
-	Bullet.prototype = Object.create(Phaser.Sprite.prototype);
-	Bullet.prototype.constructor = Bullet;
-
-	Bullet.prototype.fire = function (x, y, angle, speed, gx, gy) {
-
-			gx = gx || 0;
-			gy = gy || 0;
-
-			this.reset(x, y);
-			this.scale.set(1);
-
-			this.game.physics.arcade.velocityFromAngle(angle, speed, this.body.velocity);
-
-			this.angle = angle;
-
-			this.body.gravity.set(gx, gy);
-
-	};
-		Bullet.prototype.update = function () {
-
-			if (this.tracking)
-			{
-					this.rotation = Math.atan2(this.body.velocity.y, this.body.velocity.x);
-			}
-
-			if (this.scaleSpeed > 0)
-			{
-					this.scale.x += this.scaleSpeed;
-					this.scale.y += this.scaleSpeed;
-			}
-
-	};
-
-	var Weapon = {};
-
-	////////////////////////////////////////////////////
-	//  A single bullet is fired in front of the ship //
-	////////////////////////////////////////////////////
-
-	Weapon.SingleBullet = function (game) {
-
-			Phaser.Group.call(this, game, game.world, 'Single Bullet', false, true, Phaser.Physics.ARCADE);
-
-			this.nextFire = 0;
-			this.bulletSpeed = 600;
-			this.fireRate = 100;
-
-			for (var i = 0; i < 64; i++)
-			{
-					this.add(new Bullet(game, 'bullet5'), true);
-			}
-
-			return this;
-
-	};
-	Weapon.SingleBullet.prototype = Object.create(Phaser.Group.prototype);
-Weapon.SingleBullet.prototype.constructor = Weapon.SingleBullet;
-
-Weapon.SingleBullet.prototype.fire = function (source) {
-
-		if (this.game.time.time < this.nextFire) { return; }
-
-		var x = source.x + 10;
-		var y = source.y + 10;
-
-		this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0);
-
-		this.nextFire = this.game.time.time + this.fireRate;
-
-};*/
-
 })();

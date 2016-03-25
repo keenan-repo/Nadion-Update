@@ -65,6 +65,7 @@
 //		this.body.gravity.y = 20;
 		this.body.gravity.y = 1000;
 		this.body.maxVelocity.y = 1000;
+		console.log(this);
 	};
 	MyGame.Enemy.prototype = Object.create( Nadion.BaseSprite );
 	Nadion.__extends( MyGame.Enemy, Nadion.BaseSprite );
@@ -95,6 +96,7 @@
 		this.body.blocked.down = false;
 		this.body.touching.down = false;
 	};
+
 
 	MyGame.Enemy.prototype.updateObject = function()
 	{
