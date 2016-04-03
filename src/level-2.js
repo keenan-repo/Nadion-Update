@@ -86,7 +86,7 @@
 		[
 			{
 				name: 'main-music-loop',
-				url: 'assets/snd/9bit',
+				url: 'assets/snd/level2',
 				volume: 0.5
 			},
 			{

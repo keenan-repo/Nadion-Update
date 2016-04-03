@@ -25,8 +25,8 @@
 
 var MyGame = (function() {
 	// set any Nadion properties that we wish to override
-	Nadion.VIEW_WIDTH = 320;
-	Nadion.VIEW_HEIGHT = 240;
+	Nadion.VIEW_WIDTH = 720;
+	Nadion.VIEW_HEIGHT = 480;
 
 
 	// return the MyGame namespace
@@ -36,11 +36,15 @@ var MyGame = (function() {
 		save_file : 'MyGameSaveFile',
 
 		// keyboard controls
-		KEY_JUMP : Phaser.Keyboard.UP,
-		KEY_L : Phaser.Keyboard.LEFT,
-		KEY_R : Phaser.Keyboard.RIGHT,
-		KEY_ENTER : Phaser.Keyboard.ENTER,
-		MOUSE_LEFT : Phaser.Mouse.LEFT_BUTTON,
-		MOUSE_RIGHT : Phaser.Mouse.RIGHT_BUTTON
+		KEY_L_UP : Phaser.Keyboard.COMMA,
+		KEY_L_RIGHT : Phaser.Keyboard.E,
+		KEY_L_DOWN : Phaser.Keyboard.O,
+		KEY_L_LEFT : Phaser.Keyboard.A,
+		KEY_R_UP : Phaser.Keyboard.UP,
+		KEY_R_RIGHT : Phaser.Keyboard.RIGHT,
+		KEY_R_DOWN : Phaser.Keyboard.DOWN,
+		KEY_R_LEFT : Phaser.Keyboard.LEFT,
+		KEY_SHOOT : Phaser.Keyboard.NUMPAD_0
+
 	};
 })();

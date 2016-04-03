@@ -40,6 +40,7 @@
 				'right' : 'walking',
 				'jump' : 'jumping',
 				'hit' : 'stunned',
+				'dash' : 'dashing',
 				'attack' : 'attacking'
 			}
 		},
@@ -51,6 +52,7 @@
 				'jump' : 'jumping',
 				'fall' : 'falling',
 				'hit' : 'stunned',
+				'dash' : 'dashing',
 				'attack' : 'attacking'
 			}
 		},
@@ -61,7 +63,9 @@
 				'land' : 'recovering',
 				'hit' : 'stunned',
 				'fall' : 'falling',
-				'attack' : 'attacking'
+				'dash' : 'dashing',
+				'attack' : 'attacking',
+				'jump' : 'jumping'
 			}
 		},
 		{
@@ -77,7 +81,9 @@
 			{
 				'land' : 'idle',
 				'hit' : 'stunned',
-				'attack' : 'attacking'
+				'dash' : 'dashing',
+				'attack' : 'attacking',
+				'jump' : 'jumping'
 			}
 		},
 		{
@@ -97,6 +103,13 @@
 				'left' : 'walking',
 				'right' : 'walking'
 			}
+		},
+		{
+			'name' : 'dashing',
+			'events' :
+			{
+				'land' : 'idle'
+			}
 		}
 	];
 
@@ -111,10 +124,10 @@
 		this.stunned_timer = 0;
 		this.stunned_timeout = 500;
 		this.attack_timer = 0;
-		this.attack_timeout = 600;
+		this.attack_timeout = 500;
 		this.time = game.time;
 		this.fsm = new Nadion.StateMachine( player_states, this );
-		this.jump_increment = 500;
+		this.jump_increment = 600;
 //		this.jump_increment = 250;
 		this.walk_velocity = 200;
 		this.recovery_timer = 0;
@@ -126,6 +139,8 @@
 		this.nextFire = 0;
 		this.fireRate = 100;
 
+		this.jump_time_out = 200;
+
 		// Phaser.Sprite settings
 		this.body.collideWorldBounds = true;
 		this.body.width = 16;
@@ -136,9 +151,15 @@
 		this.animations.add( 'left', [0, 1, 2], 3, true );
 		this.animations.add( 'right', [0, 1, 2], 3, true );
 		this.animations.add( 'bite', [3, 2, 3, 2], 0.1, true);
-
-
 		game.add.existing( this );
+    console.log('create player');
+
+		this.birdpauseMenu = new PauseMenu(this.game);
+
+		this.birdHealthBar = new HealthBar(this.game, {x:60, y: 470});
+		this.birdHealthBar.setFixedToCamera(true);
+		this.health = 100;
+		this.canDoubleJump = true;
 	};
 
 	MyGame.Player.prototype = Object.create( Nadion.BaseSprite );
@@ -151,7 +172,6 @@
 
 	// prototype (methods)
 	MyGame.Player.prototype.reset = function() {
-		console.log('reseting');
 		this.x = this.initial_x;
 		this.y = this.initial_y;
 		this.body.velocity.x = 0;
@@ -161,6 +181,8 @@
 		this.attack_timer = 0;
 		this.body.velocity.x = 0;
 		this.body.velocity.y = 0;
+		this.birdHealthBar.setPercent(100);
+		this.health = 100;
 		this.fsm.reset();
 	};
 
@@ -204,53 +226,169 @@
 	};
 
 	MyGame.Player.prototype.attacking = function() {
-		this.bite();
 	};
 
-//this should be called dash or something
-	MyGame.Player.prototype.bite = function()	{
-		/*var mouseX = this.game.input.activePointer.x;
-		var mouseY = this.game.input.activePointer.y;
-		var birdX = this.x - this.game.camera.x;
-		var birdY = this.y - this.game.camera.y;
-		var distance = Math.sqrt(Math.pow((mouseX-birdX), 2) + Math.pow((mouseY-birdY), 2));
-		var dX = (mouseX - birdX);
-		var dY = (mouseY - birdY);
-		var angle = -1 * Math.atan2(dY, dX)*180/3.14159265;*/
+	MyGame.Player.prototype.shoot = function(buttons) {
+		//this.L = L;
 		var fireRate = 1000;
 		var nextFire = 0;
+		var l = [true, false, false, false, false, false, false, false];
+		var l_up = [true, true, false, false, false, false, false, false];
+		var up = [false, true, false, false, false, false, false, false];
+		var r_up = [false, true, true, false, false, false, false, false];
+		var r = [false, false, true, false, false, false, false, false];
+		var r_d = [false, false, true, true, false, false, false, false];
+		var d = [false, false, false, true, false, false, false, false];
+		var l_d = [true, false, false, true, false, false, false, false];
+		var f = [false, false, false, false, false, false, false, false]
+		this.attack_timer = this.time.time;
 		bullets = this.game.add.group();
-		bullets.enableBody = true;
-		bullets.physicsBodyType = Phaser.Physics.ARCADE;
-
-		bullets.createMultiple(50, 'bullet');
-	///	bullets.setAll('checkWorldBounds', true);
-	//	bullets.setAll('outOfBoundsKill', true);
-
-		if (this.time.now > nextFire && bullets.countDead() > 0){
-			nextFire = this.time.now + fireRate;
-
+		if (buttons.every(function(element, index) {
+			return element === f[index];
+			})) {
+			} else{
+			bullets.enableBody = true;
+			bullets.physicsBodyType = Phaser.Physics.ARCADE;
+			bullets.createMultiple(50, 'bullet');
+			bullets.setAll('checkWorldBounds', true);
+			bullets.setAll('outOfBoundsKill', true);
 			bullet = bullets.getFirstDead();
+			bullet.reset(this.x + 4 , this.y + 4);
+			bullet.anchor.set(0.5);
 
-			bullet.reset(this.x - 8, this.y - 8);
 
-			this.game.physics.arcade.moveToPointer(bullet, 300);
-			console.log(bullet);
+			if (buttons.every(function(element, index) {
+				return element === l[index];
+				})){
+					bullet.body.velocity.x = -400;
+					bullet.body.velocity.y = 0;
+			} else if (buttons.every(function(element, index) {
+				return element === l_up[index];
+				})){
+					bullet.angle = 45;
+					bullet.body.velocity.x = -300;
+					bullet.body.velocity.y = -200;
+			 }else if (buttons.every(function(element, index) {
+				return element === up[index];
+				})){
+					bullet.angle = 90;
+					bullet.body.velocity.x = 0;
+					bullet.body.velocity.y = -400;
+			} else if (buttons.every(function(element, index) {
+				return element === r_up[index];
+				})){
+					bullet.angle = 135;
+					bullet.body.velocity.x = 300;
+					bullet.body.velocity.y = -200;
+			} else if (buttons.every(function(element, index) {
+				return element === r[index];
+				})){
+					bullet.angle = 180;
+					bullet.body.velocity.x = 400;
+					bullet.body.velocity.y = 0;
+			} else if (buttons.every(function(element, index) {
+				return element === r_d[index];
+				})){
+					bullet.angle = -135;
+					bullet.body.velocity.x = 300;
+					bullet.body.velocity.y = 200;
+			} else if (buttons.every(function(element, index) {
+				return element === d[index];
+				})){
+					bullet.angle = -90;
+					bullet.body.velocity.x = 0;
+					bullet.body.velocity.y = 400;
+			} else if (buttons.every(function(element, index) {
+				return element === l_d[index];
+				})){
+					bullet.angle = -45;
+					bullet.body.velocity.x = -300;
+					bullet.body.velocity.y = 200;
+			} else {
+				bullet.kill();
+			}
 		}
 	};
 
-	MyGame.Player.prototype.attack = function()	{
+	MyGame.Player.prototype.dashing = function(){
 	};
+
+	MyGame.Player.prototype.quickMove = function(buttons){
+		var l =    [true, false, false, false, true, false, false, false];
+		var l_up = [true, true, false, false, true, false, false, false];
+		var up =   [false, true, false, false, false, false, false, false];
+		var r_up = [false, true, true, false, false, true, true, false];
+		var r =    [false, false, true, false, false, false, true, false];
+		var r_d =  [false, false, true, true, false, false, true, false];
+		var d =    [false, false, false, true, false, false, false, true];
+		var l_d =  [true, false, false, true, true, false, false, false];
+		var f =    [false, false, false, false, false, false, false, false]
+
+		if (buttons.every(function(element, index) {
+			return element === f[index];
+			})) {
+			} else {
+				if (buttons.every(function(element, index) {
+					return element === l[index];
+					})){
+						this.body.velocity.x = -400;
+						this.body.velocity.y = 0;
+				} else if (buttons.every(function(element, index) {
+					return element === l_up[index];
+					})){
+						this.body.velocity.x = -300;
+						this.body.velocity.y = -200;
+				 }else if (buttons.every(function(element, index) {
+					return element === up[index];
+					})){
+						this.body.velocity.x = 0;
+						this.body.velocity.y = -400;
+				} else if (buttons.every(function(element, index) {
+					return element === r_up[index];
+					})){
+						this.body.velocity.x = 300;
+						this.body.velocity.y = -200;
+				} else if (buttons.every(function(element, index) {
+					return element === r[index];
+					})){
+						this.body.velocity.x = 400;
+						this.body.velocity.y = 0;
+				} else if (buttons.every(function(element, index) {
+					return element === r_d[index];
+					})){
+						this.body.velocity.x = -300;
+						this.body.velocity.y = 200;
+				} else if (buttons.every(function(element, index) {
+					return element === d[index];
+					})){
+						this.body.velocity.x = 0;
+						this.body.velocity.y = 400;
+				} else if (buttons.every(function(element, index) {
+					return element === l_d[index];
+					})){
+						this.body.velocity.x = -300;
+						this.body.velocity.y = 200;
+				} else {
+						this.body.velocity.x = 0;
+						this.body.velocity.y = 0;
+				}
+			}
+	};
+
 
 	MyGame.Player.prototype.spriteCollisionCallback = function(p , s ) {
 		// we were hit by an enemy!
-		if( s instanceof MyGame.Enemy )
+		if( s instanceof MyGame.Enemy ){
 			this.hit();
+			//s.kill();
+		}
 	};
 
 	MyGame.Player.prototype.bulletCollisionCallback = function(p, s) {
-		if(s instanceof MyGame.Enemy)
-			bullet.kill();
+		if(s instanceof MyGame.Enemy){
+			p.kill();
+			s.kill();
+		}
 	};
 
 	MyGame.Player.prototype.canJump = function() {
@@ -265,6 +403,11 @@
 		// can't be hit while already stunned
 		if( this.fsm.getState() != 'stunned' ) {
 			this.fsm.consumeEvent( 'hit' );
+			this.health = this.health - 25;
+			this.birdHealthBar.setPercent(this.health);
+			if (this.health == 0) {
+				this.reset();
+			}
 		}
 		// a real game would do something more interesting here, but we'll just
 		// enter the 'stunned' state and bounce back a bit
@@ -346,118 +489,149 @@
 
 	MyGame.Player.prototype.updateObject = function() {
 		var game_state = this.game.state.states[this.game.state.current];
-		console.log(bullets);
+		//this.birdHealthBar.bringToTop();
 		// collide player with tilemap layers that are marked 'solid'
 		for( var i = 0; i < game_state.layers.length; i++ ) {
 			var lyr = game_state.layers[i];
 			if( lyr.solid )
 				this.game.physics.arcade.collide( this, lyr );
 		}
-
+		//console.log(game_state.groups);
 		// collide with sprites that are 'solid'
 		for( i = 0; i < game_state.groups.length; i++ ) {
 			this.game.physics.arcade.collide( this, game_state.groups[i], this.spriteCollisionCallback, null, this );
 		}
 
-		for( var i = 0; i < game_state.layers.length; i++ ) {
-			var lyr = game_state.layers[i];
-			if( lyr.solid )
-				this.game.physics.arcade.collide( bullets, lyr );
-		}
-
-		for( var i = 0; i < game_state.groups.length; i++ ) {
-			this.game.physics.arcade.overlap( bullets, game_state.groups[i], this.bulletCollisionCallback, null, this);
+		for( var i = 0; i < game_state.groups.length; i++ ){
+		 this.game.physics.arcade.overlap(bullets, game_state.groups[i], this.bulletCollisionCallback, null, this);
 		}
 
 		// handle input
-		var left = this.game.input.keyboard.isDown( MyGame.KEY_L ) ||
-			game_state.controls.buttonPressed[0]();
-		var right = this.game.input.keyboard.isDown( MyGame.KEY_R ) ||
-			game_state.controls.buttonPressed[1]();
-		var jump = this.game.input.keyboard.isDown( MyGame.KEY_JUMP ) ||
-			game_state.controls.buttonPressed[4]();
-		var attack = this.game.input.activePointer.isDown ;
+		//LEFT hand controls - movement
+		var L_left = this.game.input.keyboard.isDown( MyGame.KEY_L_LEFT ) || false;
+		var up = this.game.input.keyboard.isDown(MyGame.KEY_L_UP) || false;
+		var L_right = this.game.input.keyboard.isDown( MyGame.KEY_L_RIGHT ) || false ;
+		var down = this.game.input.keyboard.isDown(MyGame.KEY_L_DOWN) || false;
 
+		//RIGHT hand controls - attack types
+		var R_left = this.game.input.keyboard.isDown( MyGame.KEY_R_LEFT ) || false;
+		var jump = this.game.input.keyboard.isDown( MyGame.KEY_R_UP ) || false;
+		var R_right = this.game.input.keyboard.isDown( MyGame.KEY_R_RIGHT ) || false;
+		var duck = this.game.input.keyboard.isDown(MyGame.KEY_R_DOWN) || false;
 
+		var shoot = this.game.input.keyboard.isDown(MyGame.KEY_SHOOT) || false;
+		var buttons = [L_left, up, L_right, down, R_left, jump, R_right, duck]
 		var state = this.fsm.getState();
 
 
+
+		//console.log(state);
 		switch( state )
 		{
 			case 'idle':
 				// reset horizontal velocity
 				this.body.velocity.x = 0;
+				this.canDoubleJump = true;
 
 				// can walk or jump
-				if( jump && this.canJump() )
+				if( jump && this.canJump() ){
+					this.doubleJumpTimer = this.time.time;
 					this.fsm.consumeEvent( 'jump' );
-				else if( left ) {
+				} else if( L_left ) {
 					this.facing = Phaser.LEFT;
 					this.fsm.consumeEvent( 'left' );
-				} else if( right ) {
+				} else if( L_right ) {
 					this.facing = Phaser.RIGHT;
 					this.fsm.consumeEvent( 'right' );
 				}
-
-			  if (attack) {
+			  if (shoot && this.time.elapsedSince( this.attack_timer ) > this.attack_timeout) {
+					this.shoot(buttons);
 					this.fsm.consumeEvent('attack');
+					//this.attacking(L_left, L_right, up, buttons);
+				} else if (buttons[6] || buttons[4]) {
+					this.quickMove(buttons);
+					this.fsm.consumeEvent('dash');
 				}
 				break;
 			case 'stunned':
 				// can't do anything except wait to recover
 				if( this.time.elapsedSince( this.stunned_timer ) > this.stunned_timeout )
 					this.fsm.consumeEvent( 'recover' );
-
 				break;
+
+
 			case 'attacking':
-				if( this.time.elapsedSince( this.attack_timer ) > this.attack_timeout ){
+				//if( this.time.elapsedSince( this.attack_timer ) > this.attack_timeout ){
 					this.fsm.consumeEvent( 'finish' );
-				}
+			//	}
 
 				break;
 		case 'walking':
 			// reset horizontal velocity
-			console.log(this.time.elapsedSince( this.attack_timer ));
+			this.canDoubleJump = true;
 			this.body.velocity.x = 0;
 
+			if (R_right) {
+				this.fsm.consumeEvent('dash');
+				this.dashing();
+			}
 			// can jump, fall, keep walking or stop
-			if( jump && this.canJump() )
+			if( jump && this.canJump() ){
+				this.doubleJumpTimer = this.time.time;
 				this.fsm.consumeEvent( 'jump' );
+			}
 			// not touching ground ?
 			//else if( !this.body.touching.down && !this.body.blocked.down )
 			//	this.fsm.consumeEvent( 'fall' );
-			if (this.game.input.activePointer.isDown && this.canJump()) {
+			if (shoot && this.time.elapsedSince( this.attack_timer ) > this.attack_timeout) {
 				this.fsm.consumeEvent('attack');
-				console.log("i'm a bird chirp");
+				this.shoot(buttons);
 			}
-			else if( left )
+			else if( L_left ) {
 				this.goLeft();
-			else if( right )
+			} else if( L_right ) {
 				this.goRight();
-			else{
-				// stop
+			} else if (buttons[6] || buttons[4]) {
+				this.quickMove(buttons);
+				this.fsm.consumeEvent('dash');
+			} else {
 				this.fsm.consumeEvent( 'stop' );
 			}
 			break;
+
 		case 'jumping':
+
+
 		case 'falling':
 			// reset horizontal velocity
-			this.body.velocity.x = 0;
+			console.log(this.time.elapsedSince(this.doubleJumpTimer));
+			if (this.time.elapsedSince(this.doubleJumpTimer) < this.jump_time_out)
+				jump = false
 
-			// land?
-			if( this.body.touching.down || this.body.blocked.down ) {
-				this.fsm.consumeEvent( 'land' );
+			console.log(jump);
+			if( jump && this.canDoubleJump ){
+				console.log('double jumpped');
+				this.fsm.consumeEvent( 'jump' );
+				this.canDoubleJump = false;
 			}
-			// can move side to side
-			if( left )
-				this.airborneLeft();
-			else if( right )
-				this.airborneRight();
+				this.body.velocity.x = 0;
+				// land?
+				if( this.body.touching.down || this.body.blocked.down ) {
+					this.fsm.consumeEvent( 'land' );
+				}
+				// can move side to side
+				if( L_left )
+					this.airborneLeft();
+				else if( L_right )
+					this.airborneRight();
 
-			/*if (this.game.input.activePointer.isDown && this.canAttack() && this.time.elapsedSince( this.attack_timer ) > 3000) {
-					this.fsm.consumeEvent('attack');
-			}*/
+
 			break;
+
+			case 'dashing':
+				this.fsm.consumeEvent('land');
+			break;
+
 
 		default:
 			break;

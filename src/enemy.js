@@ -65,7 +65,6 @@
 //		this.body.gravity.y = 20;
 		this.body.gravity.y = 1000;
 		this.body.maxVelocity.y = 1000;
-		console.log(this);
 	};
 	MyGame.Enemy.prototype = Object.create( Nadion.BaseSprite );
 	Nadion.__extends( MyGame.Enemy, Nadion.BaseSprite );
@@ -120,7 +119,6 @@
 		case 'idle':
 			// can jump or remain idle
 			if( this.time.elapsedSince( this.idle_time ) > this.idle_period ){
-				console.log("jump!");
 				this.fsm.consumeEvent( 'jump' );
 			}
 			break;
