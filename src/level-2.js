@@ -34,10 +34,10 @@
 		this.tile_height = 16;
 
 		// tilemap
-		this.tilemap = 'assets/maps/level-1.json';
+		this.tilemap = 'assets/maps/level-4.json';
 
 		// tileset
-		this.tileset_url = 'assets/img/platformer_tiles.png';
+		this.tileset_url = 'assets/img/Jungle_terrain.png';
 
 		// spritesheets
 		this.spritesheets =

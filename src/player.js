@@ -152,7 +152,6 @@
 		this.animations.add( 'right', [0, 1, 2], 3, true );
 		this.animations.add( 'bite', [3, 2, 3, 2], 0.1, true);
 		game.add.existing( this );
-    console.log('create player');
 
 		this.birdpauseMenu = new PauseMenu(this.game);
 
@@ -496,7 +495,6 @@
 			if( lyr.solid )
 				this.game.physics.arcade.collide( this, lyr );
 		}
-		//console.log(game_state.groups);
 		// collide with sprites that are 'solid'
 		for( i = 0; i < game_state.groups.length; i++ ) {
 			this.game.physics.arcade.collide( this, game_state.groups[i], this.spriteCollisionCallback, null, this );
@@ -604,13 +602,11 @@
 
 		case 'falling':
 			// reset horizontal velocity
-			console.log(this.time.elapsedSince(this.doubleJumpTimer));
 			if (this.time.elapsedSince(this.doubleJumpTimer) < this.jump_time_out)
 				jump = false
 
-			console.log(jump);
+
 			if( jump && this.canDoubleJump ){
-				console.log('double jumpped');
 				this.fsm.consumeEvent( 'jump' );
 				this.canDoubleJump = false;
 			}
