@@ -164,7 +164,7 @@
 		this.birdHealthBar.setFixedToCamera(true);
 		this.health = 100;
 		this.canDoubleJump = true;
-		console.log(this);
+		//console.log(this);
 	};
 
 	MyGame.Player.prototype = Object.create( Nadion.BaseSprite );
@@ -335,7 +335,7 @@
 		var l_d =  [true, false, false, true, true, false, false, false];
 		var f =    [false, false, false, false, false, false, false, false]
 
-		console.log('quick move');
+		//console.log('quick move');
 
 		if (this.body.velocity.x > 0){
 			if (this.body.velocity.x - 15*Math.floor(this.dash_speed/this.body.velocity.x) > 0) {
@@ -354,11 +354,16 @@
 		if( s instanceof MyGame.Jumpcat ){
 			this.hit();
 			//s.kill();
+		} else if (s instanceof MyGame.Walkingcat ){
+			this.hit();
 		}
 	};
 
 	MyGame.Player.prototype.bulletCollisionCallback = function(p, s) {
 		if(s instanceof MyGame.Jumpcat){
+			p.kill();
+			s.kill();
+		} else if (s instanceof MyGame.Walkingcat){
 			p.kill();
 			s.kill();
 		}
@@ -386,6 +391,8 @@
 				this.reset();
 			}
 		}
+
+
 		// a real game would do something more interesting here, but we'll just
 		// enter the 'stunned' state and bounce back a bit
 
@@ -518,14 +525,14 @@
 
 		var key_event = this.game.input.keyboard.event;
 
-		//console.log('STATE: ' + state);
+		////console.log('STATE: ' + state);
 		switch( state )
 		{
 			case 'idle':
 				// reset horizontal velocity
 				this.body.velocity.x = 0;
 				if (this.body.blocked.down) {
-					//console.log('setting doublejump true from idle');
+					////console.log('setting doublejump true from idle');
 					this.canDoubleJump = true;
 				} else {
 					this.canDoubleJump = false;
@@ -548,7 +555,7 @@
 					this.fsm.consumeEvent('attack');
 					//this.attacking(L_left, L_right, up, buttons);
 				} else if (buttons[6] && this.canDash()) {
-						console.log('dash from idle');
+						////console.log('dash from idle');
 						this.dash_timer = this.time.time;
 						this.body.velocity.x = this.dash_speed;
 						this.fsm.consumeEvent('dash');
@@ -592,7 +599,7 @@
 			}
 
 			 if (buttons[6] && this.canDash()) {
-					console.log('in walking');
+				//	//console.log('in walking');
 					this.dash_timer = this.time.time;
 					this.body.velocity.x = this.dash_speed;
 					this.fsm.consumeEvent('dash');
@@ -627,11 +634,11 @@
 
 
 					if( jump && this.canDoubleJump ){
-						console.log('doube jumping');
+						//console.log('doube jumping');
 						this.fsm.consumeEvent( 'jump' );
 						this.canDoubleJump = false;
 					} else if (buttons[6] && this.canDash()) {
-							console.log('dash from idle');
+							//console.log('dash from idle');
 							this.dash_timer = this.time.time;
 							this.body.velocity.x = this.dash_speed;
 							this.fsm.consumeEvent('dash');
@@ -648,7 +655,7 @@
 			this.body.velocity.y = 0;
 				if (this.time.elapsedSince(this.dash_timer) > 500) {
 					this.fsm.consumeEvent('right');
-					console.log('done dashing');
+					//console.log('done dashing');
 				}
 				if (this.body.velocity.x > 0){
 					this.dashRight();

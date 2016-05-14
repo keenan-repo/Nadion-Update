@@ -95,7 +95,7 @@
                  "properties":
                     {
                      "entity":"chick",
-                     "level":"2",
+                     "level":"4",
                      "trigger_on_touch":"true"
                     },
                  "rotation":0,

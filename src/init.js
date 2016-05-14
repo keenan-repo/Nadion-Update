@@ -120,7 +120,6 @@ MyGame.Init = (function() {
 		this.game.stage.backgroundColor = '#000000';
 
 		this.ready = false;
-		console.log(this);
 	}
 
 	function onReady()
@@ -141,6 +140,8 @@ MyGame.Init = (function() {
 
 		if( this.game.input.keyboard.isDown( Phaser.Keyboard.ENTER ))
 		{
+			this.music.stop();
+
 			var saved_state = Nadion.loadState( MyGame.save_file );
 			if( saved_state )
 			{
