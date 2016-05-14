@@ -35,7 +35,7 @@
 		this.tile_height = 16;
 
 		// tilemap
-		this.tilemap = 'assets/maps/level-2.json';
+		this.tilemap = 'assets/maps/level-1.json';
 
 		// tileset
 		this.tileset_url = 'assets/img/Jungle_terrain.png';
@@ -87,7 +87,7 @@
 		[
 			{
 				name: 'main-music-loop',
-				url: 'assets/snd/9bit',
+				url: 'assets/snd/level1',
 				volume: 0.5
 			},
 			{

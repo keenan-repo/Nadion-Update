@@ -44,6 +44,7 @@ MyGame.Init = (function() {
 
 		// we'll redraw the entire screen every time, no need to clear
 			this.game.stage.clear = false;
+			//this.game.stage.disableVisibilityChange = true;
 
 			if( this.game.device.desktop )
 
@@ -137,7 +138,8 @@ MyGame.Init = (function() {
 		while( !this.ready ) return;
 
 		// start game on keypress or touch
-		if( this.game.input.keyboard.isDown( Phaser.Keyboard.ENTER ) || this.game.input.keyboard.isDown( Phaser.Keyboard.SPACEBAR ))
+
+		if( this.game.input.keyboard.isDown( Phaser.Keyboard.ENTER ))
 		{
 			var saved_state = Nadion.loadState( MyGame.save_file );
 			if( saved_state )

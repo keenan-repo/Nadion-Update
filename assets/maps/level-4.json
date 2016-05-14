@@ -45,24 +45,7 @@
          "draworder":"topdown",
          "height":100,
          "name":"objects",
-         "objects":[
-                {
-                 "height":20,
-                 "id":7,
-                 "name":"reset-level",
-                 "properties":
-                    {
-                     "entity":"chick",
-                     "level":"2",
-                     "trigger_on_touch":"true"
-                    },
-                 "rotation":0,
-                 "type":"NextLevelTrigger",
-                 "visible":true,
-                 "width":223,
-                 "x":1613,
-                 "y":589
-                }],
+         "objects":[],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -99,7 +82,7 @@
 
                     },
                  "rotation":0,
-                 "type":"Enemy",
+                 "type":"Walkingcat",
                  "visible":true,
                  "width":31,
                  "x":736,
@@ -112,7 +95,7 @@
                  "properties":
                     {
                      "entity":"chick",
-                     "level":"2",
+                     "level":"1",
                      "trigger_on_touch":"true"
                     },
                  "rotation":0,
@@ -131,7 +114,7 @@
 
                     },
                  "rotation":0,
-                 "type":"Enemy",
+                 "type":"Jumpcat",
                  "visible":true,
                  "width":31,
                  "x":928.5,
@@ -146,7 +129,7 @@
 
                     },
                  "rotation":0,
-                 "type":"Enemy",
+                 "type":"Jumpcat",
                  "visible":true,
                  "width":31,
                  "x":513.5,
@@ -161,7 +144,7 @@
 
                     },
                  "rotation":0,
-                 "type":"Enemy",
+                 "type":"Jumpcat",
                  "visible":true,
                  "width":31,
                  "x":1409.5,

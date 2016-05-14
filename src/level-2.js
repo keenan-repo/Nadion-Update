@@ -27,6 +27,7 @@
 {
 	MyGame.Level_2 = function ()
 	{
+		console.log('level loop');
 		// call the super-class constructor
 		Nadion.Level.call( this );
 
@@ -34,7 +35,7 @@
 		this.tile_height = 16;
 
 		// tilemap
-		this.tilemap = 'assets/maps/level-4.json';
+		this.tilemap = 'assets/maps/level-2.json';
 
 		// tileset
 		this.tileset_url = 'assets/img/Jungle_terrain.png';
@@ -66,7 +67,7 @@
 		[
 			{
 				name: 'background',
-				url: 'assets/img/platformer_backdrop.png',
+				url: 'assets/img/background2.png',
 				width: 1024,
 				height: 512
 			},
@@ -86,7 +87,7 @@
 		[
 			{
 				name: 'main-music-loop',
-				url: 'assets/snd/level2',
+				url: 'assets/snd/9bit',
 				volume: 0.5
 			},
 			{
