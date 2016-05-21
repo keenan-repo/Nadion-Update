@@ -27,7 +27,6 @@
 {
 	MyGame.Level_1 = function ()
 	{
-		console.log('level loop');
 		// call the super-class constructor
 		Nadion.Level.call( this );
 
@@ -45,9 +44,15 @@
 		[
 			{
 				name: 'chick',
-				url: 'assets/img/chick.png',
-				width: 16,
-				height:18
+				url: 'assets/img/b_kirbstyle.png',
+				width: 32,
+				height:30
+			},
+			{
+				name: 'big-cat',
+				url: 'assets/img/biggie_cat.png',
+				width: 64,
+				height:64
 			},
 			{
 				name: 'bad-cat',

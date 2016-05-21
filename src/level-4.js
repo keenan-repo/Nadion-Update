@@ -44,9 +44,9 @@
 		[
 			{
 				name: 'chick',
-				url: 'assets/img/chick.png',
-				width: 16,
-				height:18
+				url: 'assets/img/b_kirbstyle.png',
+				width: 32,
+				height:30
 			},
 			{
 				name: 'bad-cat',

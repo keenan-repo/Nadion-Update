@@ -23,6 +23,265 @@
 
 "use strict";
 
+MyGame.keyboardMap = [
+						  "", // [0]
+						  "", // [1]
+						  "", // [2]
+						  "CANCEL", // [3]
+						  "", // [4]
+						  "", // [5]
+						  "HELP", // [6]
+						  "", // [7]
+						  "BACK_SPACE", // [8]
+						  "TAB", // [9]
+						  "", // [10]
+						  "", // [11]
+						  "CLEAR", // [12]
+						  "ENTER", // [13]
+						  "ENTER_SPECIAL", // [14]
+						  "", // [15]
+						  "SHIFT", // [16]
+						  "CONTROL", // [17]
+						  "ALT", // [18]
+						  "PAUSE", // [19]
+						  "CAPS_LOCK", // [20]
+						  "KANA", // [21]
+						  "EISU", // [22]
+						  "JUNJA", // [23]
+						  "FINAL", // [24]
+						  "HANJA", // [25]
+						  "", // [26]
+						  "ESCAPE", // [27]
+						  "CONVERT", // [28]
+						  "NONCONVERT", // [29]
+						  "ACCEPT", // [30]
+						  "MODECHANGE", // [31]
+						  "SPACE", // [32]
+						  "PAGE_UP", // [33]
+						  "PAGE_DOWN", // [34]
+						  "END", // [35]
+						  "HOME", // [36]
+						  "LEFT", // [37]
+						  "UP", // [38]
+						  "RIGHT", // [39]
+						  "DOWN", // [40]
+						  "SELECT", // [41]
+						  "PRINT", // [42]
+						  "EXECUTE", // [43]
+						  "PRINTSCREEN", // [44]
+						  "INSERT", // [45]
+						  "DELETE", // [46]
+						  "", // [47]
+						  "0", // [48]
+						  "1", // [49]
+						  "2", // [50]
+						  "3", // [51]
+						  "4", // [52]
+						  "5", // [53]
+						  "6", // [54]
+						  "7", // [55]
+						  "8", // [56]
+						  "9", // [57]
+						  "COLON", // [58]
+						  "SEMICOLON", // [59]
+						  "LESS_THAN", // [60]
+						  "EQUALS", // [61]
+						  "GREATER_THAN", // [62]
+						  "QUESTION_MARK", // [63]
+						  "AT", // [64]
+						  "A", // [65]
+						  "B", // [66]
+						  "C", // [67]
+						  "D", // [68]
+						  "E", // [69]
+						  "F", // [70]
+						  "G", // [71]
+						  "H", // [72]
+						  "I", // [73]
+						  "J", // [74]
+						  "K", // [75]
+						  "L", // [76]
+						  "M", // [77]
+						  "N", // [78]
+						  "O", // [79]
+						  "P", // [80]
+						  "Q", // [81]
+						  "R", // [82]
+						  "S", // [83]
+						  "T", // [84]
+						  "U", // [85]
+						  "V", // [86]
+						  "W", // [87]
+						  "X", // [88]
+						  "Y", // [89]
+						  "Z", // [90]
+						  "OS_KEY", // [91] Windows Key (Windows) or Command Key (Mac)
+						  "", // [92]
+						  "CONTEXT_MENU", // [93]
+						  "", // [94]
+						  "SLEEP", // [95]
+						  "NUMPAD 0", // [96]
+						  "NUMPAD 1", // [97]
+						  "NUMPAD 2", // [98]
+						  "NUMPAD 3", // [99]
+						  "NUMPAD 4", // [100]
+						  "NUMPAD 5", // [101]
+						  "NUMPAD 6", // [102]
+						  "NUMPAD 7", // [103]
+						  "NUMPAD 8", // [104]
+						  "NUMPAD 9", // [105]
+						  "MULTIPLY", // [106]
+						  "ADD", // [107]
+						  "SEPARATOR", // [108]
+						  "SUBTRACT", // [109]
+						  "DECIMAL", // [110]
+						  "DIVIDE", // [111]
+						  "F1", // [112]
+						  "F2", // [113]
+						  "F3", // [114]
+						  "F4", // [115]
+						  "F5", // [116]
+						  "F6", // [117]
+						  "F7", // [118]
+						  "F8", // [119]
+						  "F9", // [120]
+						  "F10", // [121]
+						  "F11", // [122]
+						  "F12", // [123]
+						  "F13", // [124]
+						  "F14", // [125]
+						  "F15", // [126]
+						  "F16", // [127]
+						  "F17", // [128]
+						  "F18", // [129]
+						  "F19", // [130]
+						  "F20", // [131]
+						  "F21", // [132]
+						  "F22", // [133]
+						  "F23", // [134]
+						  "F24", // [135]
+						  "", // [136]
+						  "", // [137]
+						  "", // [138]
+						  "", // [139]
+						  "", // [140]
+						  "", // [141]
+						  "", // [142]
+						  "", // [143]
+						  "NUM_LOCK", // [144]
+						  "SCROLL_LOCK", // [145]
+						  "WIN_OEM_FJ_JISHO", // [146]
+						  "WIN_OEM_FJ_MASSHOU", // [147]
+						  "WIN_OEM_FJ_TOUROKU", // [148]
+						  "WIN_OEM_FJ_LOYA", // [149]
+						  "WIN_OEM_FJ_ROYA", // [150]
+						  "", // [151]
+						  "", // [152]
+						  "", // [153]
+						  "", // [154]
+						  "", // [155]
+						  "", // [156]
+						  "", // [157]
+						  "", // [158]
+						  "", // [159]
+						  "CIRCUMFLEX", // [160]
+						  "EXCLAMATION", // [161]
+						  "DOUBLE_QUOTE", // [162]
+						  "HASH", // [163]
+						  "DOLLAR", // [164]
+						  "PERCENT", // [165]
+						  "AMPERSAND", // [166]
+						  "UNDERSCORE", // [167]
+						  "OPEN_PAREN", // [168]
+						  "CLOSE_PAREN", // [169]
+						  "ASTERISK", // [170]
+						  "PLUS", // [171]
+						  "PIPE", // [172]
+						  "HYPHEN_MINUS", // [173]
+						  "OPEN_CURLY_BRACKET", // [174]
+						  "CLOSE_CURLY_BRACKET", // [175]
+						  "TILDE", // [176]
+						  "", // [177]
+						  "", // [178]
+						  "", // [179]
+						  "", // [180]
+						  "VOLUME_MUTE", // [181]
+						  "VOLUME_DOWN", // [182]
+						  "VOLUME_UP", // [183]
+						  "", // [184]
+						  "", // [185]
+						  "SEMICOLON", // [186]
+						  "EQUALS", // [187]
+						  "COMMA", // [188]
+						  "MINUS", // [189]
+						  "PERIOD", // [190]
+						  "SLASH", // [191]
+						  "BACK_QUOTE", // [192]
+						  "", // [193]
+						  "", // [194]
+						  "", // [195]
+						  "", // [196]
+						  "", // [197]
+						  "", // [198]
+						  "", // [199]
+						  "", // [200]
+						  "", // [201]
+						  "", // [202]
+						  "", // [203]
+						  "", // [204]
+						  "", // [205]
+						  "", // [206]
+						  "", // [207]
+						  "", // [208]
+						  "", // [209]
+						  "", // [210]
+						  "", // [211]
+						  "", // [212]
+						  "", // [213]
+						  "", // [214]
+						  "", // [215]
+						  "", // [216]
+						  "", // [217]
+						  "", // [218]
+						  "OPEN_BRACKET", // [219]
+						  "BACK_SLASH", // [220]
+						  "CLOSE_BRACKET", // [221]
+						  "QUOTE", // [222]
+						  "", // [223]
+						  "META", // [224]
+						  "ALTGR", // [225]
+						  "", // [226]
+						  "WIN_ICO_HELP", // [227]
+						  "WIN_ICO_00", // [228]
+						  "", // [229]
+						  "WIN_ICO_CLEAR", // [230]
+						  "", // [231]
+						  "", // [232]
+						  "WIN_OEM_RESET", // [233]
+						  "WIN_OEM_JUMP", // [234]
+						  "WIN_OEM_PA1", // [235]
+						  "WIN_OEM_PA2", // [236]
+						  "WIN_OEM_PA3", // [237]
+						  "WIN_OEM_WSCTRL", // [238]
+						  "WIN_OEM_CUSEL", // [239]
+						  "WIN_OEM_ATTN", // [240]
+						  "WIN_OEM_FINISH", // [241]
+						  "WIN_OEM_COPY", // [242]
+						  "WIN_OEM_AUTO", // [243]
+						  "WIN_OEM_ENLW", // [244]
+						  "WIN_OEM_BACKTAB", // [245]
+						  "ATTN", // [246]
+						  "CRSEL", // [247]
+						  "EXSEL", // [248]
+						  "EREOF", // [249]
+						  "PLAY", // [250]
+						  "ZOOM", // [251]
+						  "", // [252]
+						  "PA1", // [253]
+						  "WIN_OEM_CLEAR", // [254]
+						  "" // [255]
+						];
+
 MyGame.Init = (function() {
 
 	function preload() {
@@ -34,10 +293,20 @@ MyGame.Init = (function() {
 		// load the assets we need for the splash/menu state
     this.game.load.image( 'logo', 'assets/img/splash.png' );
 		this.game.load.audio( 'logo-fx', ['assets/snd/phaser.mp3', 'assets/snd/phaser.ogg'] );
+		this.game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
+
+		this.music_on = false;
+
 	}
 
 	function create()
 	{
+
+		if (!this.music_on) {
+				this.music = this.game.add.audio( 'logo-fx' );
+				this.music.play( '', 0, 0.5 );
+				this.music_on = true;
+			}
 		// (WebGL doesn't have a context and can't do this)
 		if( this.game.context )
 			Phaser.Canvas.setSmoothingEnabled( this.game.context, false );
@@ -78,6 +347,7 @@ MyGame.Init = (function() {
 			else
 			{
 				var saved_state = Nadion.loadState( MyGame.save_file );
+				console.log(saved_state);
 				if( saved_state )
 				{
 					// start the appropriate level
@@ -103,19 +373,22 @@ MyGame.Init = (function() {
 			.to ({ alpha : 1 }, 100, Phaser.Easing.Sinusoidal.In )
 			.start();
 		this.tween.onComplete.addOnce( onReady, this );
-		this.menu = this.game.add.button(this.game.width/2+15, this.game.height-75, 'button', actionOnClick, this, 1, 0);
+
+
+		this.new_game = this.game.add.button(this.game.width/2+200, this.game.height-75, 'button', newGame, this, 1, 0);
+		this.new_game.anchor.set(0.5);
+		this.new_game_text = this.game.add.bitmapText(this.game.width/2+200, this.game.height-73, 'carrier_command', 'New Game', 9)
+		this.new_game_text.anchor.set(0.5);
+
+		this.load_game = this.game.add.button(this.game.width/2, this.game.height-75, 'button', loadGame, this, 1, 0);
+		this.load_game.anchor.set(0.5);
+		this.load_game_text = this.game.add.bitmapText(this.game.width/2, this.game.height-73, 'carrier_command', 'Load Game', 8)
+		this.load_game_text.anchor.set(0.5);
+
+		this.menu = this.game.add.button(this.game.width/2-200, this.game.height-75, 'button', openOptions, this, 1, 0);
 		this.menu.anchor.set(0.5);
-		this.controls_text = this.game.add.text(this.game.width/2+15, this.game.height-73, 'controls', { fontSize: "16px", fill: "#FFFFFF", align: "center" })
+		this.controls_text = this.game.add.bitmapText(this.game.width/2-200, this.game.height-73, 'carrier_command', 'controls', 9)
 		this.controls_text.anchor.set(0.5);
-		this.controls_text.setShadow(-1, 1, 'rgba(0,0,0,0.7)', 0);
-		//this.menu.scale = 0.5;
-		//this.menu.bringToTop();
-
-
-		//var button = this.game.add.button(this.game.world.centerX - 200, 400, 'button', actionOnClick, this, 2, 1, 0);
-		// play the start-screen music
-		this.music = this.game.add.audio( 'logo-fx' );
-		this.music.play( '', 0, 0.5 );
 
 		this.game.stage.backgroundColor = '#000000';
 
@@ -138,72 +411,98 @@ MyGame.Init = (function() {
 
 		// start game on keypress or touch
 
-		if( this.game.input.keyboard.isDown( Phaser.Keyboard.ENTER ))
+		/*if( this.game.input.keyboard.isDown( Phaser.Keyboard.ENTER ))
 		{
-			this.music.stop();
+			this.music.stop('logo-fx');
 
 			var saved_state = Nadion.loadState( MyGame.save_file );
+			console.log(saved_state);
 			if( saved_state )
 			{
 				// start the appropriate level
+				// I'm not sure how this works but I can write my own
+				/*var new_state = MyGame["Level_" + saved_state.level];
+				this.game.state.add( 'level-' + saved_state.level, new_state, true );
+				console.log(saved_state.level);
+				console.log(saved_state.level);
 				var new_state = MyGame["Level_" + saved_state.level];
 				this.game.state.add( 'level-' + saved_state.level, new_state, true );
+				console.log('we loaded');
 			}
 			else
 			{
 				var l = new MyGame.Level_1;
 				this.game.state.add( 'level-1', l, true );
 			}
-		}
+		}*/
 		this.game.input.keyboard.reset();
 	}
 
-	function actionOnClick(){
+	function loadGame(){
+		var saved_state = Nadion.loadState( MyGame.save_file );
+		if( saved_state )
+		{
+			var new_state = MyGame["Level_" + saved_state.level];
+			this.game.state.add( 'level-' + saved_state.level, new_state, true );
+			console.log('we loaded');
+		} else {
+			window.alert('No saved game! Time to start a new one..');
+		}
+	}
+
+	function newGame() {
+		localStorage.clear();
+		var l = new MyGame.Level_1;
+		this.game.state.add( 'level-1', l, true );
+	}
+
+	function openOptions(){
 		this.logo.visible = false;
 		this.menu.visible = false;
 		this.controls_text.visible = false;
-		this.back_button = this.game.add.button(20, 300, 'button', create, this, 1, 0);
-		this.back_text = this.game.add.text(50, 305, 'back', { fontSize: "16px", fill: "#FFFFFF", align: "center" });
-		this.back_text.align.center;
-		this.back_text.setShadow(-1, 1, 'rgba(0,0,0,0.7)', 0);
+		this.back_button = this.game.add.button(this.game.width/2-200, this.game.height-75, 'button', create, this, 1, 0);
+		this.back_button.anchor.set(0.5);
+		this.back_text = this.game.add.bitmapText(this.game.width/2-200, this.game.height-73, 'carrier_command', 'BACK', 9);
+		this.back_text.anchor.set(0.5);
 
 		this.buttons_array = {};
 		this.keys = ['KEY_L_LEFT', 'KEY_L_UP', 'KEY_L_RIGHT', 'KEY_L_DOWN', 'KEY_R_LEFT', 'KEY_R_UP', 'KEY_R_RIGHT', 'KEY_R_DOWN', 'KEY_SHOOT'];
 		this.key_names = {};
 		this.key_descriptions = ["Left","Up","Right","Down","Dash Left", "Jump","Dash Right","Duck", "Shoot"];
 		this.key_text = {};
+		this.save_text = this.game.add.bitmapText(20, 220, 'carrier_command' , 'Press the M key during gameplay to save the game!', 10);
 		for (var i = 0; i < 4; i++){
+			//left hand side of the controls menu
 			this.buttons_array[i] = this.game.add.button(20, i*40+5, 'button');
 			this.buttons_array[i]._onOutFrame = 0;
 			this.buttons_array[i]._onOverFrame = 1;
 			this.buttons_array[i].name = this.keys[i];
 			this.buttons_array[i].inputEnabled = true;
 			this.buttons_array[i].events.onInputDown.add(setKey, this);
-			this.key_names[i] = this.game.add.text(60, i*40+15, String.fromCharCode(MyGame[this.keys[i]]), { font: "16px Arial", fill: "#ffffff", align: "center" });
-			this.key_names[i].setShadow(-1, 1, 'rgba(0,0,0,0.7)', 0);
-			this.key_text[i] = this.game.add.text(130, 15+40*i, this.key_descriptions[i], { font: "16px Arial", fill: "#ffffff", align: "center" });
+			this.key_names[i] = this.game.add.bitmapText(30, i*40+15, 'carrier_command', MyGame.keyboardMap[MyGame[this.keys[i]]], 10);
+			//this.key_names[i].setShadow(-1, 1, 'rgba(0,0,0,0.7)', 0);
+			this.key_text[i] = this.game.add.bitmapText(130, 15+40*i, 'carrier_command', this.key_descriptions[i], 10);
 
+			//right hand side
 			this.buttons_array[i+4] = this.game.add.button(220, i*40+5, 'button');
 			this.buttons_array[i+4]._onOutFrame = 0;
 			this.buttons_array[i+4]._onOverFrame = 1;
 			this.buttons_array[i+4].name = this.keys[i+4];
 			this.buttons_array[i+4].inputEnabled = true;
 			this.buttons_array[i+4].events.onInputDown.add(setKey, this);
-			this.key_names[i+4] = this.game.add.text(260, i*40+15, String.fromCharCode(MyGame[this.keys[i+4]]), { font: "16px Arial", fill: "#ffffff", align: "center" });
-			this.key_names[i+4].setShadow(-1, 1, 'rgba(0,0,0,0.7)', 0);
-			this.key_text[i+4] = this.game.add.text(330, 15+40*i, this.key_descriptions[i+4], { font: "16px Arial", fill: "#ffffff", align: "center" });
+			this.key_names[i+4] = this.game.add.bitmapText(230, i*40+15, 'carrier_command', MyGame.keyboardMap[MyGame[this.keys[i+4]]], 10);
+			this.key_text[i+4] = this.game.add.bitmapText(330, 15+40*i, 'carrier_command', this.key_descriptions[i+4], 10);
 		}
-		console.log(i);
+		//last bottom left control button shoot
 		this.buttons_array[i+4] = this.game.add.button(20, i*40+5, 'button');
 		this.buttons_array[i+4]._onOutFrame = 0;
 		this.buttons_array[i+4]._onOverFrame = 1;
 		this.buttons_array[i+4].name = this.keys[i+4];
 		this.buttons_array[i+4].inputEnabled = true;
 		this.buttons_array[i+4].events.onInputDown.add(setKey, this);
-		this.key_names[i+4] = this.game.add.text(60, i*40+15, String.fromCharCode(MyGame[this.keys[i+4]]), { font: "16px Arial", fill: "#ffffff", align: "center" });
-		this.key_names[i+4].setShadow(-1, 1, 'rgba(0,0,0,0.7)', 0);
-		this.key_text[i+4] = this.game.add.text(130, 15+40*i, this.key_descriptions[i+4], { font: "16px Arial", fill: "#ffffff", align: "center" });
-		console.log(this.buttons_array);
+		this.key_names[i+4] = this.game.add.bitmapText(30, i*40+15, 'carrier_command', MyGame.keyboardMap[MyGame[this.keys[i+4]]], 9);
+		this.key_text[i+4] = this.game.add.bitmapText(130, 15+40*i, 'carrier_command', this.key_descriptions[i+4], 10);
+		//console.log(this.buttons_array);
 	};
 
 	function setKey(item){
@@ -230,12 +529,16 @@ MyGame.Init = (function() {
 	};
 
 	function updateControls(object) {
+
+
 			if (object.game.input.keyboard.event){
+				console.log(object.game.input.keyboard);
 				object.set_control = false;
 				MyGame[object.keyToUpdate] = object.game.input.keyboard.event.keyCode;
-				object.key_names[object.keys.indexOf(object.keyToUpdate)].text = String.fromCharCode(MyGame[object.keyToUpdate]);
+				object.key_names[object.keys.indexOf(object.keyToUpdate)].text = MyGame.keyboardMap[MyGame[object.keyToUpdate]];
 			}
 	};
+
 	// return public API for this module
 	return {
 		preload : preload,
