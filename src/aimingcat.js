@@ -137,8 +137,8 @@
 			bullet.sendToBack();
 			bullet.anchor.set(0.5);
 			bullet.reset(this.x + 4 , this.y + 4);
-			//this.game.physics.arcade.moveToObject(bullet, MyGame.player, 500);
-
+			this.game.physics.arcade.moveToObject(bullet, MyGame.player, 500);
+			/*
 				if (this.facing == Phaser.LEFT) {
 					bullet.angle = 0;
 					bullet.body.velocity.x = -400;
@@ -147,7 +147,7 @@
 					bullet.angle = 180;
 					bullet.body.velocity.x = 400;
 					bullet.body.velocity.y = 0;
-				}
+				}*/
 
 			}
 	};

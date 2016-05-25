@@ -25,9 +25,8 @@
 
 (function()
 {
-	MyGame.Level_2 = function ()
+	MyGame.Level_8 = function ()
 	{
-		console.log('level loop');
 		// call the super-class constructor
 		Nadion.Level.call( this );
 
@@ -35,7 +34,7 @@
 		this.tile_height = 16;
 
 		// tilemap
-		this.tilemap = 'assets/maps/level-2.json';
+		this.tilemap = 'assets/maps/level-8.json';
 
 		// tileset
 		this.tileset_url = 'assets/img/Jungle_terrain.png';
@@ -67,7 +66,7 @@
 		[
 			{
 				name: 'background',
-				url: 'assets/img/background2.png',
+				url: 'assets/img/platformer_backdrop.png',
 				width: 1024,
 				height: 512
 			},
@@ -87,7 +86,7 @@
 		[
 			{
 				name: 'main-music-loop',
-				url: 'assets/snd/level2',
+				url: 'assets/snd/level4',
 				volume: 0.5
 			},
 			{
@@ -116,9 +115,9 @@
 		// the percentage loaded will display along with the 'loading' png
 		//this.loading_text_style = { font: "My_Bitmap_Font", align: "center" };
 	};
-	MyGame.Level_2.prototype = Object.create( Nadion.Level );
-	Nadion.__extends( MyGame.Level_2, Nadion.Level );
-	MyGame.Level_2.prototype.constructor = MyGame.Level_2;
+	MyGame.Level_8.prototype = Object.create( Nadion.Level );
+	Nadion.__extends( MyGame.Level_8, Nadion.Level );
+	MyGame.Level_8.prototype.constructor = MyGame.Level_8;
 
 
 })();

@@ -294,19 +294,18 @@ MyGame.Init = (function() {
     this.game.load.image( 'logo', 'assets/img/splash.png' );
 		this.game.load.audio( 'logo-fx', ['assets/snd/phaser.mp3', 'assets/snd/phaser.ogg'] );
 		this.game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
-
 		this.music_on = false;
 
 	}
 
 	function create()
 	{
+		this.music = this.game.add.audio( 'logo-fx' );
 
 		if (!this.music_on) {
-				this.music = this.game.add.audio( 'logo-fx' );
-				this.music.play( '', 0, 0.5 );
-				this.music_on = true;
-			}
+			this.music.play( '', 0, 0.1 );
+			this.music_on = true
+		}
 		// (WebGL doesn't have a context and can't do this)
 		if( this.game.context )
 			Phaser.Canvas.setSmoothingEnabled( this.game.context, false );
@@ -319,7 +318,7 @@ MyGame.Init = (function() {
 
 				// don't scale below actual size
 			  {
-					this.game.scale.SHOW_ALL
+					this.game.scale.scaleMode = 2;
 					this.game.scale.minWidth = Nadion.VIEW_WIDTH;
 			    this.game.scale.minHeight = Nadion.VIEW_HEIGHT;
 				// scale up to 1.5x maximum
@@ -328,6 +327,13 @@ MyGame.Init = (function() {
 			    this.game.scale.forceLandscape = true;
 			    this.game.scale.pageAlignHorizontally = true;
 				}
+
+				this.game.input.gamepad.start();
+
+			 // To listen to buttons from a specific pad listen directly on that pad game.input.gamepad.padX, where X = pad 1-4
+			 	this.pad1 = this.game.input.gamepad.pad1;
+
+			 	//this.game.input.onDown.add(dump, this);
 
 
 		// in "developer mode" ?
@@ -341,6 +347,7 @@ MyGame.Init = (function() {
 			if( !isNaN( ln ) )
 			{
 				// start this level
+				this.music.stop('logo-fx');
 				new_state = MyGame["Level_" + ln];
 				this.game.state.add( 'level-' + ln, new_state, true );
 			}
@@ -351,6 +358,7 @@ MyGame.Init = (function() {
 				if( saved_state )
 				{
 					// start the appropriate level
+					this.music.stop('logo-fx');
 					new_state = MyGame["Level_" + saved_state.level];
 					this.game.state.add( 'level-' + saved_state.level, new_state, true );
 					return;
@@ -359,8 +367,8 @@ MyGame.Init = (function() {
 		}
 
 		// setup touch input (in order to start game on mobile)
-		this.game.input.addPointer();
-		this.set_control = false;
+		/*this.game.input.addPointer();
+		this.set_control = false;*/
 
 		// TODO: wait for our sound(s) to be loaded
 	//	while( !this.cache.isSoundDecoded( 'logo-fx' ) ) {}
@@ -382,7 +390,7 @@ MyGame.Init = (function() {
 
 		this.load_game = this.game.add.button(this.game.width/2, this.game.height-75, 'button', loadGame, this, 1, 0);
 		this.load_game.anchor.set(0.5);
-		this.load_game_text = this.game.add.bitmapText(this.game.width/2, this.game.height-73, 'carrier_command', 'Load Game', 8)
+		this.load_game_text = this.game.add.bitmapText(this.game.width/2, this.game.height-73, 'carrier_command', 'Continue', 8)
 		this.load_game_text.anchor.set(0.5);
 
 		this.menu = this.game.add.button(this.game.width/2-200, this.game.height-75, 'button', openOptions, this, 1, 0);
@@ -406,8 +414,19 @@ MyGame.Init = (function() {
 		if (this.set_control){
 			updateControls(this);
 		}
+
+		// Pad "connected or not" indicator
+	/*	if (this.game.input.gamepad.supported && this.game.input.gamepad.active && this.pad1.connected)
+		{
+			this.load_game_text.visible = true;
+		}
+		else
+		{
+			this.load_game_text.visible = false;
+		}*/
+	//	console.log(this.game.input);
 		// wait until we're ready...
-		while( !this.ready ) return;
+		//while( !this.ready ) return;
 
 		// start game on keypress or touch
 
@@ -435,25 +454,38 @@ MyGame.Init = (function() {
 				this.game.state.add( 'level-1', l, true );
 			}
 		}*/
+
+		/*if (this.pad1.justPressed(Phaser.Gamepad.XBOX360_A) || this.game.input.keyboard.isDown( Phaser.Keyboard.ENTER) ) {
+			localStorage.clear();
+			this.music.stop('logo-fx');
+			var l = new MyGame.Level_1;
+			this.game.state.add( 'level-1', l, true );
+		}*/
 		this.game.input.keyboard.reset();
 	}
 
 	function loadGame(){
 		var saved_state = Nadion.loadState( MyGame.save_file );
-		if( saved_state )
+		//var l = new MyGame.Init2;
+		this.game.state.add( 'level-select', MyGame.Levelselect, true );		/*if( saved_state )
 		{
+			this.music.stop('logo-fx');
 			var new_state = MyGame["Level_" + saved_state.level];
 			this.game.state.add( 'level-' + saved_state.level, new_state, true );
-			console.log('we loaded');
 		} else {
 			window.alert('No saved game! Time to start a new one..');
-		}
+		}*/
 	}
 
 	function newGame() {
-		localStorage.clear();
-		var l = new MyGame.Level_1;
-		this.game.state.add( 'level-1', l, true );
+
+		if (confirm("Are you sure you want to start a new game?")) {
+			localStorage.clear();
+			this.music.stop('logo-fx');
+			var l = new MyGame.Level_1;
+			this.game.state.add( 'level-1', l, true );
+		}
+
 	}
 
 	function openOptions(){
@@ -468,7 +500,7 @@ MyGame.Init = (function() {
 		this.buttons_array = {};
 		this.keys = ['KEY_L_LEFT', 'KEY_L_UP', 'KEY_L_RIGHT', 'KEY_L_DOWN', 'KEY_R_LEFT', 'KEY_R_UP', 'KEY_R_RIGHT', 'KEY_R_DOWN', 'KEY_SHOOT'];
 		this.key_names = {};
-		this.key_descriptions = ["Left","Up","Right","Down","Dash Left", "Jump","Dash Right","Duck", "Shoot"];
+		this.key_descriptions = ["Left","Up","Right","Down","Dash Left", "Jump","Dash Right","Duck (Doesn't do anything)", "Shoot (This is disabled during the demo!)"];
 		this.key_text = {};
 		this.save_text = this.game.add.bitmapText(20, 220, 'carrier_command' , 'Press the M key during gameplay to save the game!', 10);
 		for (var i = 0; i < 4; i++){
@@ -545,4 +577,7 @@ MyGame.Init = (function() {
 		create : create,
 		update : update
 	};
+
+
+
 })();

@@ -25,7 +25,7 @@
 
 (function()
 {
-	MyGame.Level_1 = function ()
+	MyGame.Level_2 = function ()
 	{
 		// call the super-class constructor
 		Nadion.Level.call( this );
@@ -33,8 +33,11 @@
 		this.tile_width = 16;
 		this.tile_height = 16;
 
+		//this.game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
+
+
 		// tilemap
-		this.tilemap = 'assets/maps/level-1.json';
+		this.tilemap = 'assets/maps/level-2.json';
 
 		// tileset
 		this.tileset_url = 'assets/img/Jungle_terrain.png';
@@ -49,22 +52,28 @@
 				height:30
 			},
 			{
-				name: 'big-cat',
-				url: 'assets/img/biggie_cat.png',
-				width: 64,
-				height:64
-			},
-			{
 				name: 'bad-cat',
 				url: 'assets/img/baddie_cat_1.png',
 				width: 16,
 				height:16
 			},
 			{
+				name: 'big-cat',
+				url: 'assets/img/biggie_cat.png',
+				width: 64,
+				height:64
+			},
+			{
 				name: 'bullet',
 				url: 'assets/img/bullet.png',
 				width: 21,
 				height: 17
+			},
+			{
+				name: 'button',
+				url: 'assets/img/button_grey.png',
+				width: 102,
+				height: 30
 			}
 		];
 		// images
@@ -81,7 +90,13 @@
 				url: 'assets/img/paused.png',
 				width: 320,
 				height: 240
-			}
+			}/*,
+			{
+				name: 'preload',
+				url: 'assets/img/loading.png',
+				width: 320,
+				height: 240
+			}*/
 		];
 		this.paused_image_key = 'paused';
 
@@ -92,13 +107,8 @@
 		[
 			{
 				name: 'main-music-loop',
-				url: 'assets/snd/level1',
-				volume: 0.5
-			},
-			{
-				name: 'phaser',
-				url: 'assets/snd/phaser',
-				volume: 0.5
+				url: 'assets/snd/level2',
+				volume: 0.2
 			}
 
 		];
@@ -119,11 +129,11 @@
 
 		// if you set the loading font style to a bitmap font,
 		// the percentage loaded will display along with the 'loading' png
-		//this.loading_text_style = { font: "My_Bitmap_Font", align: "center" };
+		//this.loading_text_style = { font: "carrier_command", align: "center" };
 	};
-	MyGame.Level_1.prototype = Object.create( Nadion.Level );
-	Nadion.__extends( MyGame.Level_1, Nadion.Level );
-	MyGame.Level_1.prototype.constructor = MyGame.Level_1;
+	MyGame.Level_2.prototype = Object.create( Nadion.Level );
+	Nadion.__extends( MyGame.Level_2, Nadion.Level );
+	MyGame.Level_2.prototype.constructor = MyGame.Level_2;
 
 
 })();

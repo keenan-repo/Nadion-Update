@@ -243,11 +243,7 @@
 
 	MyGame.Bigcat.prototype.spriteCollisionCallback = function(p , s ) {
 		// we were hit by an Jumpcat!
-		console.log('spriteCollisionCallback');
-		if( s instanceof MyGame.Player.bullets ){
-			console.log('hit by a bullet');
-			//s.kill();
-		}
+
 	};
 
 	MyGame.Bigcat.prototype.bulletCollisionCallback = function(p, s) {
@@ -266,15 +262,17 @@
 
 		// reset horizontal velocity
 		this.body.velocity.x = 0;
+
+		// collide with sprites that are 'solid'
+		for( i = 0; i < game_state.groups.length; i++ ) {
+			this.game.physics.arcade.collide( this, game_state.groups[i], this.spriteCollisionCallback, null, this );
+		}
+
+		// collide player's bullets with sprites/enemies
 		for( var i = 0; i < game_state.groups.length; i++ ){
 		 this.game.physics.arcade.overlap(this.bullets, game_state.groups[i], this.bulletCollisionCallback, null, this);
 		}
 
-		// collide with sprites that are 'solid'
-		for( i = 0; i < game_state.groups.length; i++ ) {
-			//console.log(game_state.groups[i]);
-			this.game.physics.arcade.collide( this, game_state.groups[i], this.spriteCollisionCallback, null, this );
-		}
 
 
 		this.bullets.forEachAlive(function(bullet){

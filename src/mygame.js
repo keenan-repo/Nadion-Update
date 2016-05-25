@@ -36,6 +36,7 @@ var MyGame = (function() {
 		save_file : 'MyGameSaveFile',
 
 		// keyboard controls
+		/*
 		KEY_L_UP : Phaser.Keyboard.COMMA,
 		KEY_L_RIGHT : Phaser.Keyboard.E,
 		KEY_L_DOWN : Phaser.Keyboard.O,
@@ -45,6 +46,19 @@ var MyGame = (function() {
 		KEY_R_DOWN : Phaser.Keyboard.DOWN,
 		KEY_R_LEFT : Phaser.Keyboard.LEFT,
 		KEY_SHOOT : Phaser.Keyboard.NUMPAD_0
+//*/
+		//	for shitty qwerty users
+		///*
+		KEY_L_UP : Phaser.Keyboard.W,
+		KEY_L_RIGHT : Phaser.Keyboard.D,
+		KEY_L_DOWN : Phaser.Keyboard.S,
+		KEY_L_LEFT : Phaser.Keyboard.A,
+		KEY_R_UP : Phaser.Keyboard.UP,
+		KEY_R_RIGHT : Phaser.Keyboard.RIGHT,
+		KEY_R_DOWN : Phaser.Keyboard.DOWN,
+		KEY_R_LEFT : Phaser.Keyboard.LEFT,
+		KEY_SHOOT : Phaser.Keyboard.SPACEBAR
+			//	*/
 
 	};
 })();

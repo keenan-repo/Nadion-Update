@@ -1,4 +1,4 @@
-/ game State (level) object for Nadion template
+// game State (level) object for Nadion template
 //
 // Copyright 2013 Joshua C. Shepard
 //
@@ -25,7 +25,7 @@
 
 (function()
 {
-	MyGame.Level_4 = function ()
+	MyGame.Level_7 = function ()
 	{
 		// call the super-class constructor
 		Nadion.Level.call( this );
@@ -34,7 +34,7 @@
 		this.tile_height = 16;
 
 		// tilemap
-		this.tilemap = 'assets/maps/level-4.json';
+		this.tilemap = 'assets/maps/level-7.json';
 
 		// tileset
 		this.tileset_url = 'assets/img/Jungle_terrain.png';
@@ -115,9 +115,9 @@
 		// the percentage loaded will display along with the 'loading' png
 		//this.loading_text_style = { font: "My_Bitmap_Font", align: "center" };
 	};
-	MyGame.Level_4.prototype = Object.create( Nadion.Level );
-	Nadion.__extends( MyGame.Level_4, Nadion.Level );
-	MyGame.Level_4.prototype.constructor = MyGame.Level_4;
+	MyGame.Level_7.prototype = Object.create( Nadion.Level );
+	Nadion.__extends( MyGame.Level_7, Nadion.Level );
+	MyGame.Level_7.prototype.constructor = MyGame.Level_7;
 
 
 })();
