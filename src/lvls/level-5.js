@@ -81,6 +81,12 @@
 				url: 'assets/img/paused.png',
 				width: 320,
 				height: 240
+			},
+			{
+				name: 'dirt',
+				url: 'assets/img/dirt.png',
+				width: 5,
+				height: 5
 			}
 		];
 		this.paused_image_key = 'paused';
@@ -92,7 +98,8 @@
 		[
 			{
 				name: 'main-music-loop',
-				url: 'assets/snd/level5',
+				url: 'assets/snd/level5'
+				,
 				volume: 0.5
 			},
 			{

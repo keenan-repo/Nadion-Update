@@ -166,6 +166,8 @@
 
 		// Phaser.Sprite settings
 		this.body.collideWorldBounds = true;
+		this.canDoubleJump = true;
+		this.canWallJump = true;
 		this.body.width = 16;
 		this.body.gravity.y = 2000;
 		this.body.maxVelocity.y = this.jump_increment;
@@ -199,12 +201,17 @@
 		this.save_text.fixedToCamera = true
 		this.save_text.visible = false;
 
+		this.dirt_emitter = this.game.add.emitter(0,0,5);
+
+ 		this.dirt_emitter.makeParticles('dirt');
+ 		this.dirt_emitter.gravity = 0;
+		this.dirt_emitter.frequency = 10;
+
 
 		this.birdpauseMenu = new PauseMenu(this.game);
 
 		this.birdHealthBar = new HealthBar(this.game, {x:60, y: 470});
 		this.birdHealthBar.setFixedToCamera(true);
-		this.canDoubleJump = true;
 
 		this.bullets = this.game.add.group();
 		this.bullets.enableBody = true;
@@ -564,6 +571,12 @@
 	};
 
 	MyGame.Player.prototype.dashRight = function() {
+		if (!this.body.blocked.down) {
+			this.dirt_emitter.x = this.x;
+			this.dirt_emitter.y = this.y+16
+			this.dirt_emitter.start(true, 200, null, 3);
+		}
+
 		this.animations.play( 'dash' );
 		this.body.acceleration.x = 0;
 		this.scale.x = 1;

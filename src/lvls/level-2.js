@@ -90,6 +90,12 @@
 				url: 'assets/img/paused.png',
 				width: 320,
 				height: 240
+			},
+			{
+				name: 'dirt',
+				url: 'assets/img/air.png',
+				width: 5,
+				height: 5
 			}/*,
 			{
 				name: 'preload',

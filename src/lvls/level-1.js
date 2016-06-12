@@ -72,6 +72,12 @@
 				url: 'assets/img/bullet.png',
 				width: 21,
 				height: 17
+			},
+			{
+				name: 'owl',
+				url: 'assets/img/owl.png',
+				width: 42,
+				height: 55
 			}
 		];
 		// images
@@ -94,6 +100,12 @@
 				url: 'assets/img/rain.png',
 				width: 16,
 				height: 64
+			},
+			{
+				name: 'dirt',
+				url: 'assets/img/dirt.png',
+				width: 5,
+				height: 5
 			}
 		];
 		this.paused_image_key = 'paused';

@@ -87,6 +87,12 @@
 				url: 'assets/img/paused.png',
 				width: 320,
 				height: 240
+			},
+			{
+				name: 'dirt',
+				url: 'assets/img/dirt.png',
+				width: 5,
+				height: 5
 			}
 		];
 		this.paused_image_key = 'paused';

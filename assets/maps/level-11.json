@@ -153,6 +153,21 @@
                  "width":564.5,
                  "x":1081.5,
                  "y":561.66665
+                }, 
+                {
+                 "height":31,
+                 "id":18,
+                 "name":"owl",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"Owl",
+                 "visible":true,
+                 "width":30,
+                 "x":443,
+                 "y":220.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -161,7 +176,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":18,
+ "nextobjectid":19,
  "orientation":"orthogonal",
  "properties":
     {
